@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: fefo-fifo-demo
+
+  datasource:
+    url: jdbc:postgresql://${POSTGRESQL_HOST:localhost}:${POSTGRESQL_PORT:5432}/${POSTGRESQL_DATABASE:fefo_fifo}
+    username: ${POSTGRESQL_USER:postgres}
+    password: ${POSTGRESQL_PASSWORD:postgres}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migrations
+    baseline-on-migrate: true
+
+server:
+  port: ${SERVER_PORT:8080}
