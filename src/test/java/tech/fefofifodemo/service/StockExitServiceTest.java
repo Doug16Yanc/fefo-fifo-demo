@@ -60,7 +60,7 @@ class StockExitServiceTest extends AbstractIntegrationTest {
         Medicament med = setupMedicamentWithStock(
                 "Insulin NPH", MedicamentCategory.INSULIN, true, 100001L, 50
         );
-        var request = new CreateStockExitRequest(LocalDate.now(), 10, ExitReason.DISPENSING);
+        var request = new CreateStockExitRequest(LocalDate.now(), 10, ExitReason.DISPENSED);
 
         assertThatCode(() -> stockExitService.executeStockExit(med, request))
                 .doesNotThrowAnyException();
@@ -72,7 +72,7 @@ class StockExitServiceTest extends AbstractIntegrationTest {
         Medicament med = setupMedicamentWithStock(
                 "Paracetamol 750mg", MedicamentCategory.ANALGESIC, false, 100002L, 100
         );
-        var request = new CreateStockExitRequest(LocalDate.now(), 20, ExitReason.DISPENSING);
+        var request = new CreateStockExitRequest(LocalDate.now(), 20, ExitReason.DISPENSED);
 
         assertThatCode(() -> stockExitService.executeStockExit(med, request))
                 .doesNotThrowAnyException();
@@ -98,7 +98,7 @@ class StockExitServiceTest extends AbstractIntegrationTest {
                 "Supplier");
 
         Medicament med = medicamentService.getOrCreateMedicament(medRequest);
-        var request = new CreateStockExitRequest(LocalDate.now(), 50, ExitReason.DISPENSING);
+        var request = new CreateStockExitRequest(LocalDate.now(), 50, ExitReason.DISPENSED);
 
         assertThatCode(() -> stockExitService.executeStockExit(med, request))
                 .doesNotThrowAnyException();
@@ -110,7 +110,7 @@ class StockExitServiceTest extends AbstractIntegrationTest {
         Medicament med = setupMedicamentWithStock(
                 "Amoxillin 500mg", MedicamentCategory.ANTIBIOTIC, false, 100005L, 5
         );
-        var request = new CreateStockExitRequest(LocalDate.now(), 999, ExitReason.DISPENSING);
+        var request = new CreateStockExitRequest(LocalDate.now(), 999, ExitReason.DISPENSED);
 
         assertThatThrownBy(() -> stockExitService.executeStockExit(med, request))
                 .isInstanceOf(InsufficientStockException.class)

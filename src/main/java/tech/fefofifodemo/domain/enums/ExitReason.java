@@ -1,7 +1,7 @@
 package tech.fefofifodemo.domain.enums;
 
 public enum ExitReason {
-    DISPENSING,
+    DISPENSED,
     EXPIRED,
     DAMAGED
 }

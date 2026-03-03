@@ -11,6 +11,7 @@ import org.hibernate.annotations.Immutable;
 import org.hibernate.annotations.Subselect;
 import org.hibernate.annotations.Synchronize;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
@@ -21,16 +22,18 @@ import java.time.LocalDate;
 @Setter
 @Immutable
 @Subselect("SELECT * FROM vw_batch_fifo")
-@Synchronize({"batches, medicaments"})
+@Synchronize({"batches", "medicaments"})
 public class BatchFifo {
 
     @Id
     private Long batchId;
     private Long batchNumber;
     private LocalDate expirationDate;
+    private int currentQuantity;
     private String batchStatus;
     private Long medicamentId;
     private String medicamentName;
-    private String medicationCategory;
+    private BigDecimal volume;
+    private String medicamentCategory;
     private LocalDate entryDate;
 }

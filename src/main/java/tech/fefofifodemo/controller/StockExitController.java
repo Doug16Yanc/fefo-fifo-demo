@@ -42,13 +42,13 @@ public class StockExitController {
 
     @GetMapping("/find-all")
     public ResponseEntity<Page<StockExitResponse>> findAll(
-            @PageableDefault(size = 10, sort = "alertDate", direction = Sort.Direction.DESC) Pageable pageable) {
+            @PageableDefault(size = 10, sort = "exitDate", direction = Sort.Direction.ASC) Pageable pageable) {
         return ResponseEntity.ok().body(stockExitService.findAllStockExits(pageable));
     }
 
     @GetMapping("/find-by-batch/{batchId}")
     public ResponseEntity<Page<StockExitResponse>> findStockExitsByBatchId(
-            @PageableDefault(size = 10, sort = "alertDate", direction = Sort.Direction.DESC) Pageable pageable,
+            @PageableDefault(size = 10, sort = "exitDate", direction = Sort.Direction.ASC) Pageable pageable,
             Long batchId) {
         return ResponseEntity.ok().body(stockExitService.findStockExitsByBatchId(pageable, batchId));
     }

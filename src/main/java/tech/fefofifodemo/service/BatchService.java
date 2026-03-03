@@ -80,10 +80,12 @@ public class BatchService {
                 batchRequest.expirationDate()
         ).orElseGet(() -> batchMapper.toEntity(batchRequest));
 
-        if (batch.getId() != null) {
-            batch.setCurrentQuantity(batch.getCurrentQuantity() + batchRequest.initialQuantity());
-        } else {
+        boolean isBatchNew = batch.getId() == null;
+
+        if (isBatchNew) {
             batch.setMedicament(medicament);
+        } else {
+            batch.setCurrentQuantity(batch.getCurrentQuantity() + batchRequest.initialQuantity());
         }
 
         Batch savedBatch = batchRepository.save(batch);
@@ -95,6 +97,7 @@ public class BatchService {
         entry.setSupplier(supplier);
 
         stockEntryRepository.save(entry);
+
 
         log.info("Registered entry: Batch {}, quantity {}, medicament {}",
                 savedBatch.getBatchNumber(), batchRequest.initialQuantity(), medicament.getName());

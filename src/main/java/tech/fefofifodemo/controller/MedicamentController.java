@@ -20,15 +20,15 @@ public class MedicamentController {
         this.medicamentService = medicamentService;
     }
 
-    @PostMapping
-    public ResponseEntity<MedicamentResponse> create(@Valid @RequestBody CreateMedicamentRequest request) {
+    @PostMapping("/create-medicament")
+    public ResponseEntity<MedicamentResponse> createMedicament(@Valid @RequestBody CreateMedicamentRequest request) {
         log.info("REST request to create medicament: {}", request.name());
         var response = medicamentService.createMedicament(request);
         return ResponseEntity.ok().body(response);
     }
 
     @PutMapping("/update-medicament/{id}")
-    public ResponseEntity<MedicamentResponse> update(@PathVariable Long id,
+    public ResponseEntity<MedicamentResponse> updateMedicament(@PathVariable Long id,
                                                      @Valid @RequestBody UpdateMedicamentRequest request) {
         log.info("REST request to update medicament id: {}", id);
         var response = medicamentService.updateMedicament(id, request);

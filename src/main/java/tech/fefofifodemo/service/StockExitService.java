@@ -64,7 +64,7 @@ public class StockExitService {
         } else {
             log.info("Processing FIFO strategy for: {}", medicament.getName());
 
-            List<BatchFifo> fifoBatches = batchFifoRepository.findMedicamentById(medicament.getId());
+            List<BatchFifo> fifoBatches = batchFifoRepository.findBByMedicamentId(medicament.getId());
 
             for (BatchFifo view : fifoBatches) {
                 if (remaining <= 0) break;

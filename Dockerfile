@@ -1,8 +1,8 @@
-FROM eclipse-temurin:25-jdk-alpine AS build
+FROM eclipse-temurin:25-jdk AS build
 WORKDIR /app
 
-RUN addgroup -g 1001 -S builder && \
-    adduser -u 1001 -S builder -G builder && \
+RUN groupadd --gid 1001 builder && \
+    useradd --uid 1001 --gid 1001 --shell /bin/bash --create-home builder && \
     chown -R builder:builder /app
 
 USER builder
@@ -16,19 +16,14 @@ RUN chmod +x gradlew && \
     ./gradlew dependencies --no-daemon
 
 COPY --chown=builder:builder src ./src
+
 RUN ./gradlew bootJar -x test --no-daemon && \
     mv build/libs/*.jar build/libs/app.jar
 
-FROM gcr.io/distroless/java25-debian12:nonroot AS runtime
+FROM eclipse-temurin:25-jre AS runtime
 
 COPY --from=build --chown=nonroot:nonroot /app/build/libs/app.jar /app/app.jar
 
 WORKDIR /app
-
 EXPOSE 8080
-
-ENTRYPOINT ["java", \
-            "-XX:+UseContainerSupport", \
-            "-XX:MaxRAMPercentage=75.0", \
-            "-Djava.security.egd=file:/dev/./urandom", \
-            "-jar", "/app/app.jar"]
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]

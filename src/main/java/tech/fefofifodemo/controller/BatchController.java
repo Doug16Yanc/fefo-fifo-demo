@@ -60,14 +60,14 @@ public class BatchController {
 
     @GetMapping("/fefo")
     public ResponseEntity<Page<BatchFefoResponse>> getBatchesByFefo(
-            @PageableDefault(size = 10, sort = "alertDate", direction = Sort.Direction.DESC) Pageable pageable) {
+            @PageableDefault(size = 10, sort = "expirationDate", direction = Sort.Direction.ASC) Pageable pageable) {
         log.info("Fetching batches ordered by FEFO strategy");
         return ResponseEntity.ok(batchService.getBatchesByFefo(pageable));
     }
 
     @GetMapping("/fifo")
     public ResponseEntity<Page<BatchFifoResponse>> getBatchesByFifo(
-            @PageableDefault(size = 10, sort = "alertDate", direction = Sort.Direction.DESC) Pageable pageable) {
+            @PageableDefault(size = 10, sort = "entryDate", direction = Sort.Direction.ASC) Pageable pageable) {
         log.info("Fetching batches ordered by FIFO strategy");
         return ResponseEntity.ok(batchService.getBatchesByFifo(pageable));
     }

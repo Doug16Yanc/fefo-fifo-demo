@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface BatchFifoRepository extends JpaRepository<BatchFifo, Long> {
-    List<BatchFifo> findMedicamentById(Long id);
+    List<BatchFifo> findBByMedicamentId(Long medicamentId);
 }
